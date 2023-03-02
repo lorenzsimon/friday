@@ -1,0 +1,31 @@
+client: Client {
+    icon: https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg
+}
+
+frontend: Frontend {
+    app: Web App {
+        icon: https://upload.wikimedia.org/wikipedia/commons/a/ae/Nuxt_logo.svg
+    }
+}
+
+backend: Backend {
+    gateway: GraphQL Gateway {
+        icon: https://global.discourse-cdn.com/business5/uploads/apollographql/original/1X/25bd5104d61020fe4dc0777a5919cd009bca633e.png
+    }
+    network: Private Docker Network {
+        direction: right
+        transaction: Transaction Service {
+            reader {
+                icon: https://docs.nestjs.com/assets/logo-small.svg
+            }
+        }
+        db: Database {
+            icon: https://wiki.postgresql.org/images/a/a4/PostgreSQL_logo.3colors.svg
+        }
+    }
+}
+
+client -> frontend: interacts with
+frontend.app -> backend.gateway: makes backend requests via
+backend.gateway -> backend.network: resolves frontend requests to services
+backend.network.transaction.reader -> backend.network.db: gets data from
