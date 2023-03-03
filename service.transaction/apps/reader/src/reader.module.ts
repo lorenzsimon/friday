@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ReaderController } from './reader.controller';
-import { ReaderService } from './reader.service';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
-  imports: [],
-  controllers: [ReaderController],
-  providers: [ReaderService],
+  imports: [TransactionsModule]
 })
 export class ReaderModule {}
