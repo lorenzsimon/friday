@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -36,5 +37,7 @@ model Transaction {
   account    Account?  @relation(fields: [accountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   category   Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
+  @@index([amount, currency], map: "transaction_amount_idx")
+  @@index([date, currency], map: "transaction_date_idx")
   @@map("transaction")
 }

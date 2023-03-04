@@ -53,3 +53,12 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "transaction_servic
 	DELIMITER ','
 	CSV HEADER;
 EOSQL
+
+# Create indexes
+psql -v ON_ERROR_STOP=1 --username "transaction_service" --dbname "transaction_service" <<-EOSQL
+	CREATE INDEX transaction_amount_idx
+	ON transaction_service.transaction(amount, currency);
+
+	CREATE INDEX transaction_date_idx
+	ON transaction_service.transaction(date, currency);
+EOSQL
