@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
-  imports: [TransactionsModule]
+    imports: [TransactionsModule]
 })
-export class ReaderModule {}
+export class ReaderModule { }
