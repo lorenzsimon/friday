@@ -1,0 +1,62 @@
+type Query {
+    transactionDetail(id: String!): TransactionDetail
+    transactionSummaries(input: TransactionSummariesInput!): TransactionSummaries
+}
+
+type TransactionDetail {
+    id: String!
+    account: Account
+    category: Category
+    reference: String
+    amount: Float
+    currency: String
+    date: String
+}
+
+type TransactionSummaries {
+    skip: Int!
+    transactions: [TransactionSummary]!
+}
+
+input TransactionSummariesInput {
+    take: Int!
+    skip: Int = 0
+    reference: String
+    sort: Sort
+    order: Order
+    dateStart: String 
+    dateEnd: String
+    category: String
+    currency: String
+    bank: String
+    account: String
+    amountMin: Int
+    amountMax: Int
+}
+
+enum Sort {
+    amount, date
+}
+
+enum Order {
+    asc, desc
+}
+
+type TransactionSummary {
+    id: String!
+    category: Category
+    reference: String
+    amount: Float
+    currency: String
+    date: String
+}
+
+type Account {
+    name: String
+    bank: String
+}
+
+type Category {
+    name: String
+    color: String
+}
