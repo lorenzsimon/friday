@@ -9,10 +9,12 @@ frontend: Frontend {
 }
 
 backend: Backend {
-    gateway: GraphQL Gateway {
-        icon: https://global.discourse-cdn.com/business5/uploads/apollographql/original/1X/25bd5104d61020fe4dc0777a5919cd009bca633e.png
+    public_subnet: Public Subnet {
+        gateway: GraphQL Gateway {
+            icon: https://global.discourse-cdn.com/business5/uploads/apollographql/original/1X/25bd5104d61020fe4dc0777a5919cd009bca633e.png
+        }
     }
-    network: Private Docker Network {
+    private_subnet: Private Subnet {
         direction: right
         transaction: Transaction Service {
             reader {
@@ -26,6 +28,6 @@ backend: Backend {
 }
 
 client -> frontend: interacts with
-frontend.app -> backend.gateway: makes backend requests via
-backend.gateway -> backend.network: resolves frontend requests to services
-backend.network.transaction.reader -> backend.network.db: gets data from
+frontend.app -> backend.public_subnet.gateway: makes backend requests via
+backend.public_subnet.gateway -> backend.private_subnet: resolves frontend requests to services
+backend.private_subnet.transaction.reader -> backend.private_subnet.db: gets data from
