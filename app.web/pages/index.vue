@@ -18,54 +18,51 @@ const query = gql`
     }
 `
 
-const queryInput = ref({ input: { take: 10, skip: 0 } })
-const { data: queryData } = await useAsyncQuery(query, queryInput.value)
-const transactions = ref(queryData.value.transactionSummaries.transactions.map(trx => ({
+let skip = 0
+const take = 100
+let queryInput = { input: { take: take, skip: skip } }
+const { data: queryData } = await useAsyncQuery(query, queryInput)
+const mapTransaction = (trx) => ({
     id: trx.id,
     reference: trx.reference,
     category: trx.category?.name,
     categoryColor: trx.category?.color,
-    date: trx.date,
+    date: new Date(trx.date).toDateString(),
     amount: trx.amount,
     currency: trx.currency
-})))
+})
+
+const transactions = ref(queryData.value.transactionSummaries.transactions.map(mapTransaction))
 
 const searchHandler = async (searchInput) => {
-    queryInput.value = {
+    queryInput = {
         input: {
-            take: 100,
-            skip: 0,
+            take: take,
+            skip: (skip = 0),
             reference: searchInput.searchText ? searchInput.searchText : null,
             dateEnd: new Date(),
-            dateStart: new Date(Date.now() - searchInput.dateRange * 24 * 60 * 60 * 1000),
+            dateStart: searchInput.dateRange ? new Date(Date.now() - searchInput.dateRange * 24 * 60 * 60 * 1000) : null,
             bank: searchInput.bank ? searchInput.bank : null,
             account: searchInput.account ? searchInput.account : null
         }
     }
-    const { data: queryData } = await useAsyncQuery(query, queryInput.value)
-    transactions.value = queryData.value.transactionSummaries.transactions.map(trx => ({
-        id: trx.id,
-        reference: trx.reference,
-        category: trx.category?.name,
-        categoryColor: trx.category?.color,
-        date: trx.date,
-        amount: trx.amount,
-        currency: trx.currency
-    }))
+    const { data: queryData } = await useAsyncQuery(query, queryInput)
+    transactions.value = queryData.value.transactionSummaries.transactions.map(mapTransaction)
 }
 </script>
 
 <template>
     <div class="container mx-auto">
-        <div class="mt-5 md:mt-20">
-            <h1 class="text-2xl font-bold">Friday Full-Stack Application</h1>
-            <h3 class="text-m font-medium">Transaction Search</h3>
+        <div class="mt-4 md:mt-10">
+            <h1 class="text-4xl font-bold">Friday Full-Stack Application &#128640;</h1>
+            <h3 class="text-xl font-medium">Transaction Search</h3>
         </div>
-        <div class="mt-5">
+        <div class="mt-6">
             <SearchInput @search="searchHandler" />
         </div>
-        <div class="mt-4">
+        <div class="mt-2">
             <SearchResults :transactions="transactions" />
         </div>
+        <button class="btn btn-block btn-outline my-3">Load more</button>
     </div>
 </template>
