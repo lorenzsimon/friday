@@ -49,6 +49,19 @@ const searchHandler = async (searchInput) => {
     const { data: queryData } = await useAsyncQuery(query, queryInput)
     transactions.value = queryData.value.transactionSummaries.transactions.map(mapTransaction)
 }
+
+const loadMoreHandler = async () => {
+    queryInput = {
+        input: {
+            ...queryInput.input,
+            skip: (skip = skip + take)
+        }
+    }
+    const { data: queryData } = await useAsyncQuery(query, queryInput)
+
+    // TODO: Use reactive for better efficiency
+    transactions.value = [...transactions.value, ...queryData.value.transactionSummaries.transactions.map(mapTransaction)]
+}
 </script>
 
 <template>
@@ -63,6 +76,6 @@ const searchHandler = async (searchInput) => {
         <div class="mt-2">
             <SearchResults :transactions="transactions" />
         </div>
-        <button class="btn btn-block btn-outline my-3">Load more</button>
+        <button @click="loadMoreHandler" class="btn btn-block btn-outline my-3">Load more</button>
     </div>
 </template>
