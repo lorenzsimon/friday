@@ -20,7 +20,7 @@ const query = gql`
 
 let skip = 0
 const take = 100
-let queryInput = { input: { take: take, skip: skip } }
+let queryInput = { input: { take, skip } }
 const { data: queryData } = await useAsyncQuery(query, queryInput)
 const mapTransaction = (trx) => ({
     id: trx.id,
@@ -41,7 +41,9 @@ const searchHandler = async (searchInput) => {
             skip: (skip = 0),
             reference: searchInput.searchText ? searchInput.searchText : null,
             dateEnd: new Date(),
-            dateStart: searchInput.dateRange ? new Date(Date.now() - searchInput.dateRange * 24 * 60 * 60 * 1000) : null,
+            dateStart: searchInput.dateRange 
+                ? new Date(Date.now() - searchInput.dateRange * 24 * 60 * 60 * 1000) 
+                : null,
             bank: searchInput.bank ? searchInput.bank : null,
             account: searchInput.account ? searchInput.account : null
         }
@@ -60,7 +62,10 @@ const loadMoreHandler = async () => {
     const { data: queryData } = await useAsyncQuery(query, queryInput)
 
     // TODO: Use reactive for better efficiency
-    transactions.value = [...transactions.value, ...queryData.value.transactionSummaries.transactions.map(mapTransaction)]
+    transactions.value = [
+        ...transactions.value, 
+        ...queryData.value.transactionSummaries.transactions.map(mapTransaction)
+    ]
 }
 </script>
 

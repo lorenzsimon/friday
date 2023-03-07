@@ -18,13 +18,18 @@ const props = defineProps(['transactions'])
                 <tr v-for="transaction in transactions">
                     <td>{{ transaction.reference }}</td>
                     <td>
-                        <div class="badge badge-outline border-2" :style="{ borderColor: '#' + transaction.categoryColor }">
+                        <div 
+                            class="badge badge-outline border-2" 
+                            :style="{ borderColor: '#' + transaction.categoryColor }"
+                        >
                             {{ transaction.category }}
                         </div>
                     </td>
                     <td>{{ transaction.date }}</td>
                     <td>{{ transaction.amount }} {{ transaction.currency }}</td>
-                    <NuxtLink :to="'/transactions/' + transaction.id"><td>&#128073;</td></NuxtLink>
+                    <NuxtLink :to="'/transactions/' + transaction.id">
+                        <td>&#128073;</td>
+                    </NuxtLink>
                 </tr>
             </tbody>
         </table>
