@@ -6,7 +6,6 @@ WORKDIR /usr/src/app
 COPY . .
 RUN rm -f .env
 
-ENV APOLLO_BASE_URL=http://gateway:8080/graphql
 RUN yarn && yarn build
 RUN yarn install --prod --ignore-scripts --prefer-offline
 
