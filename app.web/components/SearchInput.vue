@@ -25,7 +25,7 @@ const onSearchInput = (event) => {
                 name="search" 
                 placeholder="Search" 
                 v-model="searchInput.searchText"
-                class="w-full px-4 py-2 border dark:border-0 rounded-lg focus:border-blue-300 text-sm" 
+                class="w-full px-4 py-2 border dark:border-0 rounded-lg focus:border-primary-focus text-sm" 
             />
         </div>
         <div class="flex items-center space-x-2">
@@ -38,7 +38,7 @@ const onSearchInput = (event) => {
                     name="bank" 
                     placeholder="Bank" 
                     v-model="searchInput.bank"
-                    class="w-full px-4 py-2 border dark:border-0 rounded-lg focus:border-blue-300 text-sm" 
+                    class="w-full px-4 py-2 border dark:border-0 rounded-lg focus:border-primary-focus text-sm" 
                 />
             </div>
             <div>
@@ -50,7 +50,7 @@ const onSearchInput = (event) => {
                     name="account" 
                     placeholder="Account" 
                     v-model="searchInput.account"
-                    class="w-full px-4 py-2 border dark:border-0 rounded-lg focus:border-blue-300 text-sm" 
+                    class="w-full px-4 py-2 border dark:border-0 rounded-lg focus:border-primary-focus text-sm" 
                 />
             </div>
             <div>
