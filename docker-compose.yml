@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  transaction:
+    build: "./service.transaction/"
+    environment:
+      DATABASE_URL: "postgresql://transaction_service:password@postgres:5432/transaction_service?schema=transaction_service"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  gateway:
+    build: "./service.gateway/"
+    environment:
+      TRANSACTION_SERVICE_URL: "http://transaction:3000/"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - transaction
+  postgres:
+    build: "./db.postgres/"
+    environment:
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - "./db.postgres/data:/docker-entrypoint-initdb.d/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
