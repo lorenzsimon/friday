@@ -1,0 +1,19 @@
+{
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "dev": "nuxt dev --port=3030",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "devDependencies": {
+        "@nuxtjs/apollo": "^5.0.0-alpha.5",
+        "@nuxtjs/tailwindcss": "^6.4.1",
+        "daisyui": "^2.51.3"
+    },
+    "dependencies": {
+        "nuxt": "^3.2.3"
+    }
+}
